@@ -34,7 +34,7 @@
   <div style="{{ lockOverlayStyle }}">
     <div style="{{ lockBoxStyle }}">
       <span style="{{ lockLabelStyle }}">ENTER CODE</span>
-      <input type="password" inputMode="numeric" value="{{ passcodeInput }}" onChange="{{ onPasscodeChange }}" onKeyDown="{{ onPasscodeKeyDown }}" style="{{ lockInputStyle }}" autoFocus="{{ true }}" />
+      <input type="tel" autoComplete="off" value="{{ passcodeInput }}" onChange="{{ onPasscodeChange }}" onKeyDown="{{ onPasscodeKeyDown }}" style="{{ lockInputStyle }}" autoFocus="{{ true }}" />
       <sc-if value="{{ passcodeError }}" hint-placeholder-val="{{ false }}">
         <span style="{{ lockErrorStyle }}">코드가 올바르지 않습니다</span>
       </sc-if>
@@ -357,6 +357,7 @@ class Component extends DCLogic {
 
   componentDidMount() {
     this._homeInterval = setInterval(() => {
+      if (this.state.showProjectLock || this.state.showCareerLock) return;
       this.setState(s => ({ homeIdx: s.homeIdx + 1 }));
     }, 2600);
   }
@@ -1275,6 +1276,10 @@ class Component extends DCLogic {
       showProjectLock: this.state.showProjectLock,
       passcodeInput: this.state.passcodeInput,
       passcodeError: this.state.passcodeError,
+      onPasscodeChange: (e) => this.setState({ passcodeInput: e.target.value, passcodeError: false }),
+      onPasscodeKeyDown: (e) => { if (e.key === 'Enter') this.submitPasscode(); },
+      submitPasscode: () => this.submitPasscode(),
+      cancelPasscode: () => this.setState({ showProjectLock: false, passcodeInput: '', passcodeError: false }),
       showCareerLock: this.state.showCareerLock,
       careerPasscodeInput: this.state.careerPasscodeInput,
       careerPasscodeError: this.state.careerPasscodeError,
@@ -1549,7 +1554,13 @@ class Component extends DCLogic {
       currentRightCategory: categoryItems[(this.state.homeIdx + 2) % categoryItems.length],
       myName: 'Kim Woojeong',
       homeKey: this.state.homeIdx,
-      enterProject: () => this.setPage('project'),
+      enterProject: () => {
+        if (!this.state.projectUnlocked) {
+          this.setState({ showProjectLock: true, passcodeInput: '', passcodeError: false });
+        } else {
+          this.setPage('project');
+        }
+      },
 
       contactPageStyle: {
         flex: 1,
