@@ -27,6 +27,17 @@
     .pf-row:hover .pf-row-num { color: {{ inkColor }}; }
     .pf-nav-link:hover { opacity: 1 !important; }
     .pf-social:hover { color: {{ inkColor }} !important; }
+    @media (max-width: 700px) {
+      .pf-header { padding: 16px 20px !important; }
+      .pf-nav-row { gap: 14px !important; }
+      .pf-nav-link { font-size: 10px !important; letter-spacing: 0.06em !important; }
+      .pf-home-grid {
+        grid-template-columns: 1fr !important;
+        row-gap: 28px !important;
+        padding: 32px 20px !important;
+        min-height: auto !important;
+      }
+    }
   </style>
 </helmet>
 
@@ -65,9 +76,9 @@
 <div style="{{ rootStyle }}">
 
   <!-- NAV -->
-  <header style="{{ headerStyle }}">
+  <header class="pf-header" style="{{ headerStyle }}">
     <div style="{{ brandMarkStyle }}" onClick="{{ goHomeClick }}">Portfolio</div>
-    <nav style="{{ navRowStyle }}">
+    <nav class="pf-nav-row" style="{{ navRowStyle }}">
       <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="4">
         <a href="#" onClick="{{ item.onClick }}" class="pf-nav-link" style="{{ item.style }}">{{ item.label }}</a>
       </sc-for>
@@ -76,7 +87,7 @@
 
   <!-- HOME PAGE -->
   <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
-    <main key="home" style="{{ homePageStyle }}">
+    <main key="home" class="pf-home-grid" style="{{ homePageStyle }}">
       <div style="{{ homeCategoryColStyle }}">
         <span style="{{ homeSideLabelStyle }}">{{ homeLeftLabel }}</span>
         <div style="{{ homeSideValueWrapStyle }}">
