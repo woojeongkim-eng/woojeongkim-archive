@@ -32,6 +32,22 @@ When the user hands over a fresh `index.html` export to "redeploy," do not just 
 
 A fresh machine has no git credential helper / SSH key / `gh` CLI configured for GitHub, so `git push` fails with "could not read Username." Don't ask the user for a token — instead install `gh` (`brew install gh`) and run `gh auth login --hostname github.com --git-protocol https --web` in the background, relay the one-time code + https://github.com/login/device URL to the user in chat and ask them to authorize it themselves (don't click "Authorize" for them — that's an OAuth grant, which needs their explicit action). Once `gh auth status` shows logged in, run `gh auth setup-git` and normal `git clone`/`push` over HTTPS works. This is per-machine — redo it on any new computer. Use `git clone --depth 1` (shallow) when cloning; a full clone pulls the ~3.5GB history noted below and can time out.
 
+## "포폴" vs "archive" — the user names the two repos differently than you'd guess
+
+The user calls `woojeong.kim` "포폴"/"포트폴리오" (portfolio) and this repo "아카이브"/"archive" — as **repo/site names**. So "archive만" / "archive 포폴에" / "아카이브" = this repo only; "포폴만"/"portfolio만" = `woojeong.kim` only. When scope isn't stated, ask rather than guess.
+
+**Current divergence:** this repo has newer Archive PHOTO/MODEL content than `woojeong.kim` — Daily Wear Mesh Cushion, White Tomato Crème Mist (both PHOTO and MODEL tabs), and the Chuseok-images-merged-into-Promotion folder only exist here so far, because the requests that added them were explicitly scoped "archive" only. If asked to bring `woojeong.kim` in sync, port the equivalent `photoRealFolders`/`realModelFolders` entries over (same `.flatMap`/thumbnail-override mechanisms already exist in both repos).
+
+## AI-tab folders auto-split photos from videos (`realAiFolders`)
+
+A `.flatMap()` step (search for "Photos from a shoot stay bundled") runs before the final `.map()` that builds `thumbEl`/`onOpen`: for each raw folder object, images stay bundled as one card, but each video becomes its own standalone card (so a multi-video AI folder doesn't need an extra click to reach clip 2/3). Resulting titles: `<Folder Title> · Clip N` when there's more than one video or a mixed photo+video source, `· Image` / `· Video` when exactly one of each, unchanged when the folder is already single-media. Add new AI folders as one object with a mixed-type `media` array — don't pre-split manually, the flatMap does it. (`woojeong.kim` has the identical pattern.)
+
+Current AI-tab campaigns worth knowing about: `ai-musinsa` (MUSINSA X PORTRÉ collab — teasing clips + a promo poster image, auto-split into Image/Clip cards) and `ai-musinsa-beautyfesta` (separate single-clip folder) — both inserted before the trailing `ai-9` Promotion•Packaging folder. `ai-white-tomato-mist` (2 model-teaser clips) is pinned first in the array so it leads the AI grid.
+
+## Folder ordering is just array order — "맨 앞으로" means reorder the literal array
+
+`photoRealFolders`/`realModelFolders`/`realAiFolders` render in the order their objects appear in the source array (filtered by `mediaType`, no separate sort). When the user says a folder should be first/last, physically move that object's block in the array — don't add a `sortOrder` field or similar, there isn't one.
+
 ## Recurring workflow with this user
 
 The user (woojeongkim-eng) regularly hands over a new folder/zip of raw photos or files and expects it pushed live with minimal back-and-forth. Their stated pattern: they give the folder, say which site(s) it's for ("archive만" / "portfolio만" / "둘 다"), and expect compression + non-ASCII renaming + diffing + `git commit`/`push` to happen without re-confirming each step — treat "here's a folder + site scope" as standing authorization to carry the change all the way to a live push on the site(s) named, following the conventions in this file (don't ask "should I push?" again once scope is given). Still use judgment: if something is genuinely ambiguous (e.g. which folder/category a given photo belongs to, or which specific image within a folder they mean), ask rather than guess — a wrong live thumbnail is a worse outcome than one clarifying question.
