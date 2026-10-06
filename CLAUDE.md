@@ -48,6 +48,12 @@ Current AI-tab campaigns worth knowing about: `ai-musinsa` (MUSINSA X PORTRÉ co
 
 `photoRealFolders`/`realModelFolders`/`realAiFolders` render in the order their objects appear in the source array (filtered by `mediaType`, no separate sort). When the user says a folder should be first/last, physically move that object's block in the array — don't add a `sortOrder` field or similar, there isn't one.
 
+## Current decisions (don't undo without asking)
+
+- **Passcodes are intentionally open** (Project page and Profile career details): `projectUnlocked`/`careerUnlocked` default to `true` in `index.html`. The user's job-application resumes link to this site, so locked content would be invisible to recruiters. Only flip back to `false` if the user asks.
+- Numbers on the site were reconciled with the user's resumes (the user's resumes are the source of truth and are not edited from here): supporters = 2기 / 300건+ / 50명; viral content = 140건 (Jungsaemmool); Jungsaemmool IMC campaign is described as "기획 참여·운영 서포트", not sole ownership; 979% is shown as ROAS.
+- Project detail pages use the case-study layout (split hero, facts row, metrics, GOAL/ACTION, captions) driven by optional `period`/`metrics`/`story`/`captions` fields on each `portreRaw`/`jungsaemmoolRaw` entry; the card thumbnail wrapper uses a fixed `height:'325px'` because `aspect-ratio` with a fixed px width misrendered.
+
 ## Recurring workflow with this user
 
 The user (woojeongkim-eng) regularly hands over a new folder/zip of raw photos or files and expects it pushed live with minimal back-and-forth. Their stated pattern: they give the folder, say which site(s) it's for ("archive만" / "portfolio만" / "둘 다"), and expect compression + non-ASCII renaming + diffing + `git commit`/`push` to happen without re-confirming each step — treat "here's a folder + site scope" as standing authorization to carry the change all the way to a live push on the site(s) named, following the conventions in this file (don't ask "should I push?" again once scope is given). Still use judgment: if something is genuinely ambiguous (e.g. which folder/category a given photo belongs to, or which specific image within a folder they mean), ask rather than guess — a wrong live thumbnail is a worse outcome than one clarifying question.

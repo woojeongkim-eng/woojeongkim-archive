@@ -403,11 +403,11 @@ const TRANSPARENT_PX = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAA
 class Component extends DCLogic {
   state = {
     page: 'home',
-    projectUnlocked: true, // TEMP: passcode disabled — set back to false to re-lock
+    projectUnlocked: true, // passcode intentionally open (job applications link here) — set to false only if the user asks to re-lock
     showProjectLock: false,
     passcodeInput: '',
     passcodeError: false,
-    careerUnlocked: true, // TEMP: passcode disabled — set back to false to re-lock
+    careerUnlocked: true, // passcode intentionally open (job applications link here) — set to false only if the user asks to re-lock
     showCareerLock: false,
     pendingCareerId: null,
     careerPasscodeInput: '',
@@ -531,7 +531,7 @@ class Component extends DCLogic {
       {
         title: 'Google Best in Class 선정 \nIMC 캠페인',
         role: 'IMC Campaign · Brand Strategy · PR',
-        description: 'TVC·디지털·SNS·PR을 아우르는 통합 IMC 캠페인을 기획·운영한 프로젝트입니다.',
+        description: 'TVC·디지털·SNS·PR을 아우르는 통합 IMC 캠페인의 기획에 참여하고 운영을 서포트한 프로젝트입니다.',
         results: ['Google Best in Class 사례 선정', '25~34세 타겟 구매전환율 7% 이상 상승', '브랜드 철학 및 캠페인 메시지 확산'],
         images: ['FIND_YOUTIFUL_1.png', 'FIND_YOUTIFUL_2.png', 'FIND_YOUTIFUL_3.png', 'FIND_YOUTIFUL_4.png'].map(f => 'uploads/' + f),
         cardImage: 'uploads/FIND_YOUTIFUL_3-33b7a5e9.png',
@@ -542,19 +542,19 @@ class Component extends DCLogic {
         ],
         story: [
           { label: 'GOAL', text: "브랜드 철학 'Find Youtiful'을 소비자 경험으로 연결" },
-          { label: 'ACTION', text: "TVC, 디지털, SNS, PR을 아우르는 통합 IMC 캠페인을 기획·운영하고, '찾아봐, 너만의 아름다움' 메시지를 중심으로 온·오프라인 접점 확장" },
+          { label: 'ACTION', text: "TVC, 디지털, SNS, PR을 아우르는 통합 IMC 캠페인 기획에 참여하고 운영을 서포트하며, '찾아봐, 너만의 아름다움' 메시지를 중심으로 온·오프라인 접점 확장" },
         ],
       },
       {
         title: '올리브영 쿠션 1위를 만든 \n바이럴 마케팅',
         role: 'Viral Marketing · Influencer · Content Strategy',
         description: '올리브영 \'파워팩\' 프로모션의 바이럴 마케팅 전략을 기획·운영한 프로젝트입니다.',
-        results: ['바이럴 콘텐츠 132건 배포', '인플루언서 콘텐츠 조회수 2.3만+', '올리브영 쿠션 카테고리 1위 달성', '프로모션 KPI 달성 및 매출 기여'],
+        results: ['바이럴 콘텐츠 140건 배포', '인플루언서 콘텐츠 조회수 2.3만+', '올리브영 쿠션 카테고리 1위 달성', '프로모션 KPI 달성 및 매출 기여'],
         images: ['uploads/project/viral-marketing-thumb.jpg'],
         cardImage: 'uploads/project/viral-marketing-thumb.jpg',
         period: '23.01 ~ 24.08',
         metrics: [
-          { value: '132건', label: '바이럴 콘텐츠 배포' },
+          { value: '140건', label: '바이럴 콘텐츠 배포' },
           { value: '2.3만+', label: '인플루언서 콘텐츠 조회수' },
           { value: '1위', label: '올리브영 쿠션 카테고리' },
         ],
@@ -1634,7 +1634,7 @@ class Component extends DCLogic {
             '신제품 론칭 마케팅 전략 수립 및 운영',
             'SNS 채널 운영 전략 및 커뮤니케이션 전략 수립',
             '연간 브랜딩 캠페인 기획 및 운영 서포트',
-            '통합 캠페인 IMC 마케팅 기획 및 운영(TVC·옥외광고·버스광고·SNS·디지털·PR 통합) \n — 25–34 타겟 구매전환 7%↑, 업계 Best in Class 사례 선정',
+            '통합 캠페인 IMC 마케팅 기획 참여 및 운영 서포트(TVC·옥외광고·버스광고·SNS·디지털·PR 통합) \n — 25–34 타겟 구매전환 7%↑, 업계 Best in Class 사례 선정',
           ],
         },
         {
