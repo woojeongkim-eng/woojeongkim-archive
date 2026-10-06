@@ -16,6 +16,9 @@
     * { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; }
     body { -webkit-font-smoothing: antialiased; }
+    /* Korean wraps at word boundaries, not mid-word; overflow-wrap is the fallback for over-long strings */
+    body { word-break: keep-all; overflow-wrap: break-word; }
+    .pf-about-meta-col { text-align: left; }
     @keyframes pf-fade-up {
       from { opacity: 0; transform: translateY(14px); }
       to { opacity: 1; transform: translateY(0); }
@@ -42,6 +45,7 @@
       .pf-big-title { font-size: 28px !important; overflow-wrap: break-word !important; }
       .pf-about-title { font-size: 20px !important; line-height: 1.5 !important; }
       .pf-about-body { font-size: 13px !important; line-height: 1.7 !important; }
+      .pf-about-meta-col { width: 100% !important; max-width: 320px; }
       .pf-career-row { gap: 10px !important; padding: 16px 0 !important; }
       .pf-career-company { font-size: 16px !important; width: auto !important; flex-shrink: 0 !important; }
       .pf-career-role { font-size: 11px !important; }
@@ -244,17 +248,17 @@
           생성형 AI를 활용한 콘텐츠 제작까지 역량을 확장하고 있습니다.
         </p>
         <div style="{{ aboutMetaRowStyle }}">
-          <div style="{{ aboutMetaColStyle }}">
+          <div class="pf-about-meta-col" style="{{ aboutMetaColStyle }}">
             <div style="{{ aboutMetaDividerStyle }}"></div>
             <span style="{{ aboutMetaLabelStyle }}">NAME</span>
             <span style="{{ aboutMetaValueStyle }}">Kim Woojeong</span>
           </div>
-          <div style="{{ aboutMetaColStyle }}">
+          <div class="pf-about-meta-col" style="{{ aboutMetaColStyle }}">
             <div style="{{ aboutMetaDividerStyle }}"></div>
             <span style="{{ aboutMetaLabelStyle }}">ROLE</span>
             <span style="{{ aboutMetaValueStyle }}">Marketing &amp; Content</span>
           </div>
-          <div style="{{ aboutMetaColStyle }}">
+          <div class="pf-about-meta-col" style="{{ aboutMetaColStyle }}">
             <div style="{{ aboutMetaDividerStyle }}"></div>
             <span style="{{ aboutMetaLabelStyle }}">CONTACT</span>
             <sc-for list="{{ contactRows }}" as="row" hint-placeholder-count="2">
@@ -263,16 +267,17 @@
           </div>
         </div>
         <div style="{{ aboutMetaRowStyle }}">
-          <div style="{{ aboutMetaColStyle }}">
+          <div class="pf-about-meta-col" style="{{ aboutMetaColStyle }}">
             <div style="{{ aboutMetaDividerStyle }}"></div>
             <span style="{{ aboutMetaLabelStyle }}">EDUCATION</span>
             <span style="{{ aboutMetaValueStyle }}">한국외국어대학교</span>
             <span style="{{ aboutMetaValueStyle }}">독일어통번역학과 (2015 — 2021)</span>
           </div>
-          <div style="{{ aboutMetaColStyle }}">
+          <div class="pf-about-meta-col" style="{{ aboutMetaColStyle }}">
             <div style="{{ aboutMetaDividerStyle }}"></div>
             <span style="{{ aboutMetaLabelStyle }}">SKILLS</span>
-            <span style="{{ aboutMetaValueStyle }}">Meta Ads Manager · 네이버 광고 · 카카오모먼트 · GA</span>
+            <span style="{{ aboutMetaValueStyle }}">Meta Ads Manager · Google Analytics</span>
+            <span style="{{ aboutMetaValueStyle }}">네이버 광고 · 카카오모먼트</span>
             <span style="{{ aboutMetaValueStyle }}">Photoshop · Premiere</span>
             <span style="{{ aboutMetaValueStyle }}">생성형 AI — Kling · Nano Banana · Claude</span>
           </div>
