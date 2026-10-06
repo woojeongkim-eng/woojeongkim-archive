@@ -182,14 +182,16 @@
                 </div>
               </sc-for>
             </div>
-            <div style="{{ metricsRowStyle }}">
-              <sc-for list="{{ metricItems }}" as="m" hint-placeholder-count="4">
-                <div style="{{ metricItemStyle }}">
-                  <span style="{{ metricValueStyle }}">{{ m.value }}</span>
-                  <span style="{{ metricLabelStyle }}">{{ m.label }}</span>
-                </div>
-              </sc-for>
-            </div>
+            <sc-if value="{{ hasMetrics }}" hint-placeholder-val="{{ false }}">
+              <div style="{{ metricsRowStyle }}">
+                <sc-for list="{{ metricItems }}" as="m" hint-placeholder-count="4">
+                  <div style="{{ metricItemStyle }}">
+                    <span style="{{ metricValueStyle }}">{{ m.value }}</span>
+                    <span style="{{ metricLabelStyle }}">{{ m.label }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
             <p style="{{ projectDetailBodyStyle }}">{{ projectDetail.description }}</p>
           </div>
         </div>
@@ -529,42 +531,83 @@ class Component extends DCLogic {
       {
         title: 'Google Best in Class 선정 \nIMC 캠페인',
         role: 'IMC Campaign · Brand Strategy · PR',
-        description: '생성형 AI로 이미지·영상 콘텐츠 제작 프로세스를 구축한 프로젝트입니다.',
+        description: 'TVC·디지털·SNS·PR을 아우르는 통합 IMC 캠페인을 기획·운영한 프로젝트입니다.',
         results: ['Google Best in Class 사례 선정', '25~34세 타겟 구매전환율 7% 이상 상승', '브랜드 철학 및 캠페인 메시지 확산'],
         images: ['FIND_YOUTIFUL_1.png', 'FIND_YOUTIFUL_2.png', 'FIND_YOUTIFUL_3.png', 'FIND_YOUTIFUL_4.png'].map(f => 'uploads/' + f),
         cardImage: 'uploads/FIND_YOUTIFUL_3-33b7a5e9.png',
+        period: '24.02 ~ 24.08',
+        metrics: [
+          { value: '7%+', label: '25~34세 타겟 구매전환율 상승' },
+          { value: 'Best in Class', label: 'Google 사례 선정' },
+        ],
+        story: [
+          { label: 'GOAL', text: "브랜드 철학 'Find Youtiful'을 소비자 경험으로 연결" },
+          { label: 'ACTION', text: "TVC, 디지털, SNS, PR을 아우르는 통합 IMC 캠페인을 기획·운영하고, '찾아봐, 너만의 아름다움' 메시지를 중심으로 온·오프라인 접점 확장" },
+        ],
       },
       {
         title: '올리브영 쿠션 1위를 만든 \n바이럴 마케팅',
         role: 'Viral Marketing · Influencer · Content Strategy',
-        description: '올리브영 상반기 최대 프로모션 \'파워팩\'의 매출 극대화와 검색 점유율 확보를 목표로 바이럴 마케팅 전략을 기획했습니다. 초기 화제성 확보와 지속적인 검색 노출을 위해 리딩군·서포터군 이원화 전략을 수립하고, 유튜브·인스타그램·블로그를 활용한 콘텐츠를 운영했습니다.',
+        description: '올리브영 \'파워팩\' 프로모션의 바이럴 마케팅 전략을 기획·운영한 프로젝트입니다.',
         results: ['바이럴 콘텐츠 132건 배포', '인플루언서 콘텐츠 조회수 2.3만+', '올리브영 쿠션 카테고리 1위 달성', '프로모션 KPI 달성 및 매출 기여'],
-        images: ['baireolmaketing_1.png'].map(f => 'uploads/' + f),
+        images: ['uploads/project/viral-marketing-thumb.jpg'],
         cardImage: 'uploads/project/viral-marketing-thumb.jpg',
+        period: '23.01 ~ 24.08',
+        metrics: [
+          { value: '132건', label: '바이럴 콘텐츠 배포' },
+          { value: '2.3만+', label: '인플루언서 콘텐츠 조회수' },
+          { value: '1위', label: '올리브영 쿠션 카테고리' },
+        ],
+        story: [
+          { label: 'GOAL', text: "올리브영 상반기 최대 프로모션 '파워팩'의 매출 극대화와 검색 점유율 확보" },
+          { label: 'ACTION', text: '초기 화제성과 지속적인 검색 노출을 위해 리딩군·서포터군 이원화 전략을 수립하고, 유튜브·인스타그램·블로그 콘텐츠 운영' },
+        ],
       },
       {
         title: 'ROAS 979%를 달성한 \n퍼포먼스 마케팅',
         role: 'Performance Marketing · Meta Ads · Retargeting',
-        description: '프로모션 기간 구매전환을 극대화하기 위해 데이터 기반 퍼포먼스 광고 전략을 운영했습니다. 광고 피로도를 개선하기 위해 소재를 지속적으로 다각화하고, 구매 단계별 리타겟팅 전략을 적용해 광고 효율을 높였습니다.',
+        description: '데이터 기반 퍼포먼스 광고로 프로모션 구매전환을 높인 프로젝트입니다.',
         results: ['ROAS 최대 979% 달성', '월평균 ROAS 406%', '광고 소재 최적화를 통한 지속적인 효율 개선'],
-        images: ['dijiteolgwanggo_1.jpeg', 'dijiteolgwanggo_2.png', 'dijiteolgwanggo_3.png', 'dijiteolgwanggo_4.png'].map(f => 'uploads/' + f),
+        images: ['uploads/project/performance-marketing-thumb.jpg', 'uploads/dijiteolgwanggo_2.png', 'uploads/dijiteolgwanggo_3.png', 'uploads/dijiteolgwanggo_4.png'],
         cardImage: 'uploads/project/performance-marketing-thumb.jpg',
+        period: '22.04 ~ 24.08',
+        metrics: [
+          { value: '979%', label: '최대 ROAS' },
+          { value: '406%', label: '월평균 ROAS' },
+        ],
+        story: [
+          { label: 'GOAL', text: '프로모션 기간 구매전환 극대화' },
+          { label: 'ACTION', text: '데이터 기반 퍼포먼스 광고를 운영하며 소재를 지속적으로 다각화하고, 구매 단계별 리타겟팅 적용' },
+        ],
       },
       {
         title: '브랜드 아이덴티티를 구축한 \n콘텐츠 전략',
         role: 'Content Strategy · SNS · Creative',
-        description: '브랜드 아이덴티티를 일관되게 전달하고 2030 고객과의 접점을 확대하기 위해 온드미디어 콘텐츠를 기획·운영했습니다. 브랜드 톤앤매너를 기반으로 콘텐츠와 비주얼을 기획하며 브랜드 경험을 강화했습니다.',
+        description: '온드미디어 콘텐츠로 브랜드 아이덴티티를 구축한 프로젝트입니다.',
         results: ['브랜드 아이덴티티 강화', '콘텐츠 참여도 및 인게이지먼트 향상', '신제품 커뮤니케이션 강화'],
-        images: ['ondeumidieo_1.png', 'ondeumidieo_2.png', 'ondeumidieo_3.png'].map(f => 'uploads/' + f),
+        images: ['uploads/ondeumidieo_2.png', 'uploads/ondeumidieo_3.png'],
         cardImage: 'uploads/ondeumidieo_2.png',
+        period: '22.04 ~ 24.08',
+        story: [
+          { label: 'GOAL', text: '브랜드 아이덴티티를 일관되게 전달하고 2030 고객과의 접점 확대' },
+          { label: 'ACTION', text: '브랜드 톤앤매너를 기반으로 온드미디어 콘텐츠와 비주얼을 기획·운영' },
+        ],
       },
       {
         title: '브랜드 경험을 확장한 \n전시 프로젝트',
         role: 'Brand Experience · Exhibition · PR',
-        description: '플래그십 스토어를 브랜드 경험 공간으로 확장하기 위해 시즌별 전시 프로젝트를 기획·운영했습니다. 전시와 체험 프로그램을 통해 브랜드 철학을 공간 경험으로 전달하고 고객 접점을 확대했습니다.',
+        description: '플래그십 스토어에서 시즌별 전시 프로젝트를 기획·운영한 프로젝트입니다.',
         results: ['시즌 5~8 전시 운영', '언론 홍보를 통한 브랜드 노출 확대', 'SNS 이벤트 및 클래스 운영으로 고객 참여 확대'],
         images: ['peulrobseuinateu_1.jpeg', 'peulrobseuinateu_2.png', 'peulrobseuinateu_3.png', 'peulrobseuinateu_4.png', 'peulrobseuinateu_5.png', 'peulrobseuinateu_6.png'].map(f => 'uploads/' + f),
         cardImage: 'uploads/peulrobseuinateu_5-66fd2f0d.png',
+        period: '23.05 ~ 24.08',
+        metrics: [
+          { value: '시즌 5~8', label: '전시 운영' },
+        ],
+        story: [
+          { label: 'GOAL', text: '플래그십 스토어를 브랜드 경험 공간으로 확장' },
+          { label: 'ACTION', text: '시즌별 전시 프로젝트를 기획·운영하고, 전시와 체험 프로그램으로 브랜드 철학을 공간 경험으로 전달' },
+        ],
       },
     ];
     const portreRaw = [
@@ -609,7 +652,7 @@ class Component extends DCLogic {
       {
         title: '생성형 AI를 활용한 \n비주얼 콘텐츠 제작',
         role: 'Generative AI · Creative Production · Workflow Innovation',
-        description: '생성형 AI를 활용해 이미지와 영상 콘텐츠 제작 프로세스를 구축했습니다. 브랜드 무드를 유지하면서도 다양한 크리에이티브를 빠르게 제작할 수 있는 제작 환경을 마련해 콘텐츠 생산성과 운영 효율을 높였습니다.',
+        description: '생성형 AI로 이미지·영상 콘텐츠 제작 프로세스를 구축한 프로젝트입니다.',
         results: ['생성형 AI 콘텐츠 15건 이상 제작', '제작 리드타임 단축', '다양한 크리에이티브 제작 방식 확보', '콘텐츠 제작 효율 향상'],
         cardImage: 'uploads/project/ai-content-production-01.jpg',
         images: ['uploads/project/ai-content-production-01.jpg', 'uploads/project/ai-content-production-02.jpg', 'uploads/project/ai-content-production-03.jpg', 'uploads/project/ai-content-production-04.jpg'],
