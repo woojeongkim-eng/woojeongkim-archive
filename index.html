@@ -403,11 +403,11 @@ const TRANSPARENT_PX = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAA
 class Component extends DCLogic {
   state = {
     page: 'home',
-    projectUnlocked: false,
+    projectUnlocked: true, // TEMP: passcode disabled — set back to false to re-lock
     showProjectLock: false,
     passcodeInput: '',
     passcodeError: false,
-    careerUnlocked: false,
+    careerUnlocked: true, // TEMP: passcode disabled — set back to false to re-lock
     showCareerLock: false,
     pendingCareerId: null,
     careerPasscodeInput: '',
@@ -1017,6 +1017,7 @@ class Component extends DCLogic {
     }));
 
     const videoClipFiles = [
+      'DdlTycVBeyr.mp4', 'DdDyF5fud18.mp4', 'Dc-IrcOu23l.mp4', 'Dc26D2rRJNX.mp4', 'DdYsj06zF22.mp4',
       'DahmIqLMI_T.mp4', 'DacfMqtPwaM.mp4', 'DaSJBXSgPLp.mp4', 'DYWl80xN_Oc.mp4', 'DX8egI6RArp.mp4',
       'DX0sLGqv9Cf.mp4', 'DXYro0LD6wX.mp4', 'DW8YiZeDvXj.mp4', 'DWGXBGPjD-e.mp4', 'DUh9qvAjJkx.mp4',
       'DUIQYCPl37s.mp4', 'DT2GGQ4kWkN.mp4', 'DTfAdNBl-nh.mp4',
