@@ -164,9 +164,41 @@
       </div>
       <div style="{{ projectDetailMetaRowStyle }}">
         <h1 class="pf-big-title" style="{{ projectDetailTitleStyle }}">{{ projectDetail.title }}</h1>
-        <span style="{{ projectDetailTagStyle }}">{{ projectDetail.company }} — {{ projectDetail.role }}</span>
+        <sc-if value="{{ showDetailTag }}" hint-placeholder-val="{{ true }}">
+          <span style="{{ projectDetailTagStyle }}">{{ projectDetail.company }} — {{ projectDetail.role }}</span>
+        </sc-if>
       </div>
+      <sc-if value="{{ hasFacts }}" hint-placeholder-val="{{ false }}">
+        <div style="{{ factsRowStyle }}">
+          <sc-for list="{{ factItems }}" as="fa" hint-placeholder-count="3">
+            <div style="{{ factItemStyle }}">
+              <span style="{{ factLabelStyle }}">{{ fa.label }}</span>
+              <span style="{{ factValueStyle }}">{{ fa.value }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+      <sc-if value="{{ hasMetrics }}" hint-placeholder-val="{{ false }}">
+        <div style="{{ metricsRowStyle }}">
+          <sc-for list="{{ metricItems }}" as="m" hint-placeholder-count="4">
+            <div style="{{ metricItemStyle }}">
+              <span style="{{ metricValueStyle }}">{{ m.value }}</span>
+              <span style="{{ metricLabelStyle }}">{{ m.label }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
       <p style="{{ projectDetailBodyStyle }}">{{ projectDetail.description }}</p>
+      <sc-if value="{{ hasStory }}" hint-placeholder-val="{{ false }}">
+        <div style="{{ storyListStyle }}">
+          <sc-for list="{{ storyItems }}" as="st" hint-placeholder-count="2">
+            <div style="{{ storyRowStyle }}">
+              <span style="{{ storyLabelStyle }}">{{ st.label }}</span>
+              <span style="{{ storyTextStyle }}">{{ st.text }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
       <sc-if value="{{ hasResults }}" hint-placeholder-val="{{ false }}">
         <span style="{{ resultsLabelStyle }}">RESULT</span>
         <ul style="{{ resultsListStyle }}">
@@ -177,8 +209,13 @@
       </sc-if>
       <div style="{{ projectDetailGridStyle }}">
         <sc-for list="{{ projectGridImages }}" as="gi" hint-placeholder-count="4">
-          <div style="{{ projectDetailImgWrapStyle }}">
-            {{ gi.imgEl }}
+          <div style="{{ projectDetailFigureStyle }}">
+            <div style="{{ projectDetailImgWrapStyle }}">
+              {{ gi.imgEl }}
+            </div>
+            <sc-if value="{{ gi.hasCaption }}" hint-placeholder-val="{{ false }}">
+              <span style="{{ projectDetailCaptionStyle }}">{{ gi.caption }}</span>
+            </sc-if>
           </div>
         </sc-for>
       </div>
@@ -428,6 +465,10 @@ class Component extends DCLogic {
           description: it.description || '이 프로젝트의 배경, 목표, 진행 과정을 담는 상세 설명 placeholder입니다. 캠페인 전략, 비주얼 방향, 결과 등을 자유롭게 채워주세요.',
           results: it.results || [],
           images: it.images || [],
+          period: it.period || '',
+          metrics: it.metrics || [],
+          story: it.story || [],
+          captions: it.captions || [],
         },
       }),
     }));
@@ -525,10 +566,22 @@ class Component extends DCLogic {
       {
         title: '데이터 기반 성장을 이끈 \n퍼포먼스 마케팅',
         role: 'Performance Marketing · Meta Ads · Digital Strategy',
-        description: '브랜드 초기 성장 단계에서 퍼포먼스 마케팅을 중심으로 브랜드 인지도와 매출을 동시에 확대했습니다. Meta, 네이버 브랜드검색, 카카오 등 주요 디지털 채널을 운영하며 캠페인별 광고 전략을 수립하고, 데이터 기반 최적화를 통해 광고 효율을 지속적으로 개선했습니다.',
+        description: '데이터 기반 퍼포먼스 마케팅으로 브랜드 초기 성장을 이끈 프로젝트입니다.',
         results: ['평균 ROAS 505% 달성', '최고 ROAS 1,058% 달성', '월 평균 노출 96만+ · 클릭 1.7만+', '브랜드검색 키워드 14개 → 33개 확대'],
         cardImage: 'uploads/project/performance-marketing-01.jpg',
         images: ['uploads/project/performance-marketing-01.jpg', 'uploads/project/performance-marketing-02.jpg', 'uploads/project/performance-marketing-03.jpg', 'uploads/project/performance-marketing-04.jpg'],
+        period: 'OO.OO – OO.OO (OO개월)',
+        metrics: [
+          { value: '505%', label: '평균 ROAS' },
+          { value: '1,058%', label: '최고 ROAS' },
+          { value: '96만+', label: '월 평균 노출' },
+          { value: '14 → 33', label: '브랜드검색 키워드 (개)' },
+        ],
+        story: [
+          { label: 'GOAL', text: '브랜드 초기 성장 단계에서 브랜드 인지도와 매출을 동시에 확대' },
+          { label: 'ACTION', text: 'Meta, 네이버 브랜드검색, 카카오 등 주요 디지털 채널을 운영하며 캠페인별 광고 전략을 수립하고, 데이터 기반 최적화로 광고 효율을 지속 개선' },
+        ],
+        captions: ['맑은결쿠션 런칭 광고 소재', '추석 시즌 기획 소재', '선크림 리얼 리뷰 소재', '립밤 썸머 에디트 소재'],
       },
       {
         title: '브랜드 비주얼을 완성한 \n콘텐츠 제작',
@@ -1679,8 +1732,23 @@ class Component extends DCLogic {
         : []
       ).map((src, i) => {
         const s = src ? enc(src) : null;
-        return { id: 'pdi-' + i, imgEl: (typeof s === 'string') ? React.createElement('img', { src: s, alt: '', style: { width: '100%', height: '100%', objectFit: 'cover', display: 'block' } }) : null };
+        const caps = (this.state.projectDetail && this.state.projectDetail.captions) || [];
+        const caption = caps[i + 1] || '';
+        return { id: 'pdi-' + i, caption, hasCaption: !!caption, imgEl: (typeof s === 'string') ? React.createElement('img', { src: s, alt: caption, style: { width: '100%', height: '100%', objectFit: 'cover', display: 'block' } }) : null };
       }),
+      hasMetrics: !!(this.state.projectDetail && this.state.projectDetail.metrics && this.state.projectDetail.metrics.length),
+      metricItems: (this.state.projectDetail && this.state.projectDetail.metrics) || [],
+      hasStory: !!(this.state.projectDetail && this.state.projectDetail.story && this.state.projectDetail.story.length),
+      storyItems: (this.state.projectDetail && this.state.projectDetail.story) || [],
+      hasFacts: !!(this.state.projectDetail && (this.state.projectDetail.period || (this.state.projectDetail.metrics && this.state.projectDetail.metrics.length))),
+      showDetailTag: !(this.state.projectDetail && (this.state.projectDetail.period || (this.state.projectDetail.metrics && this.state.projectDetail.metrics.length))),
+      factItems: (() => {
+        const pd = this.state.projectDetail;
+        if (!pd) return [];
+        const items = [{ label: 'COMPANY', value: pd.company }, { label: 'FIELD', value: pd.role }];
+        if (pd.period) items.splice(1, 0, { label: 'PERIOD', value: pd.period });
+        return items;
+      })(),
       closeProjectDetail: () => this.setState({ projectDetail: null }),
 
       activeTabProjects: activeTabCompany.projects.map(p => {
@@ -2018,6 +2086,20 @@ class Component extends DCLogic {
       resultsLabelStyle: { fontFamily: sans, fontSize: '12px', letterSpacing: '0.14em', color: faintInk, marginTop: '28px', display: 'block' },
       resultsListStyle: { display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '12px', marginBottom: 0, paddingLeft: '18px', maxWidth: '640px' },
       resultItemStyle: { fontFamily: sans, fontSize: '14px', lineHeight: 1.6, color: ink },
+      factsRowStyle: { display: 'flex', flexWrap: 'wrap', gap: '12px 48px', paddingBottom: '20px', marginBottom: '28px', borderBottom: '1px solid oklch(88% 0.006 60 / 0.7)' },
+      factItemStyle: { display: 'flex', flexDirection: 'column', gap: '4px' },
+      factLabelStyle: { fontFamily: sans, fontSize: '11px', letterSpacing: '0.14em', color: faintInk },
+      factValueStyle: { fontFamily: sans, fontSize: '13px', color: ink, letterSpacing: '0.02em' },
+      metricsRowStyle: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: '28px 24px', marginBottom: '36px' },
+      metricItemStyle: { display: 'flex', flexDirection: 'column', gap: '6px' },
+      metricValueStyle: { fontFamily: serif, fontStyle: 'italic', fontSize: '46px', lineHeight: 1.05, color: ink },
+      metricLabelStyle: { fontFamily: sans, fontSize: '12px', lineHeight: 1.5, color: mutedInk, letterSpacing: '0.04em' },
+      storyListStyle: { display: 'flex', flexDirection: 'column', gap: '18px', marginTop: '28px', maxWidth: '720px' },
+      storyRowStyle: { display: 'grid', gridTemplateColumns: '96px 1fr', gap: '16px', alignItems: 'baseline' },
+      storyLabelStyle: { fontFamily: sans, fontSize: '11px', letterSpacing: '0.14em', color: faintInk },
+      storyTextStyle: { fontFamily: sans, fontSize: '14px', lineHeight: 1.8, color: ink },
+      projectDetailFigureStyle: { display: 'flex', flexDirection: 'column', gap: '8px' },
+      projectDetailCaptionStyle: { fontFamily: sans, fontSize: '12px', lineHeight: 1.5, color: mutedInk },
       projectDetailGridStyle: {
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
