@@ -53,6 +53,7 @@ Current AI-tab campaigns worth knowing about: `ai-musinsa` (MUSINSA X PORTRÉ co
 - **Passcodes are intentionally open** (Project page and Profile career details): `projectUnlocked`/`careerUnlocked` default to `true` in `index.html`. The user's job-application resumes link to this site, so locked content would be invisible to recruiters. Only flip back to `false` if the user asks.
 - Numbers on the site were reconciled with the user's resumes (the user's resumes are the source of truth and are not edited from here): supporters = 2기 / 300건+ / 50명; viral content = 140건 (Jungsaemmool); Jungsaemmool IMC campaign is described as "기획 참여·운영 서포트", not sole ownership; 979% is shown as ROAS.
 - Project detail pages use the case-study layout (split hero, facts row, metrics, GOAL/ACTION, captions) driven by optional `period`/`metrics`/`story`/`captions` fields on each `portreRaw`/`jungsaemmoolRaw` entry; the card thumbnail wrapper uses a fixed `height:'325px'` because `aspect-ratio` with a fixed px width misrendered.
+- Project image trial (2026-10-06): PORTRÉ 01 (performance marketing) now uses a single 2×2 collage (`uploads/project/performance-marketing-collage.jpg`, built from its four 1600×2000 images at 800×1000 each, no gaps) as both `cardImage` and the only `images` entry, so the detail page shows the collage in the hero and no gallery below; its `captions` were removed. The user is trying this on one project first — if approved, repeat per project (originals `-01..04.jpg` are kept in `uploads/`).
 
 ## Recurring workflow with this user
 
